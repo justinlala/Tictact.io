@@ -1,47 +1,54 @@
 <html>
 <head>
-	<title>div table</title>
-	<link rel="stylesheet" type="text/css" href="style.css">
+	<title>TicTact.io</title>
+	<link rel="stylesheet" type="text/css" href="css/normalize.css">
+	<link rel="stylesheet" type="text/css" href="css/style.css">
 	<link href='http://fonts.googleapis.com/css?family=Exo:100' rel='stylesheet' type='text/css'>
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-	<script type="text/javascript" src="script.js"></script>
 </head>
 <body>
-	<header> <span class="title">Tictact.io</span></header>
+	<header id ="headr"> <span class="title">Tictact<span style="color: orange">.io</span></span><div id="quit">Quit?</div></header>
 	<div id = "content">
 		<div id="sidel"> 
 				<h3>Home</h3>
-				<h4>00</h4>
+				<h4 id="home_score">00</h4>
 		</div>
 		<div class = "main">
 			<div class = "row">
-				<div class = "cell" >&nbsp;</div>
-				<div class = "cell"id="midtop" >&nbsp;</div>
-				<div class = "cell" >&nbsp;</div>
+				<div class = "cell" ><p id ="1" class ="celltext">&nbsp;</p></div>
+				<div class = "cell"id="midtop" ><p id ="2" class ="celltext">&nbsp;</p></div>
+				<div class = "cell" ><p id ="3" class ="celltext">&nbsp;</p></div>
 			</div>
 			
 			<div class = "row" id="mid">
-				<div class = "cell" id="centl">&nbsp;</div>
-				<div class = "cell" id="center">&nbsp;</div>
-				<div class = "cell" id="centr">&nbsp;</div>
+				<div class = "cell" id="centl"><p id ="4" class ="celltext">&nbsp;</p></div>
+				<div class = "cell" id="center">
+					
+					<p id ="5" class ="celltext">&nbsp;</p>
+				</div>
+				<div class = "cell" id="centr"><p id ="6" class ="celltext">&nbsp;</p></div>
 			</div>
 
 			<div class = "row">
-				<div class = "cell" >&nbsp;</div>
-				<div class = "cell" id="botmid">&nbsp;</div>
-				<div class = "cell" >&nbsp;</div>
+				<div class = "cell" ><p id ="7" class ="celltext">&nbsp;</p></div>
+				<div class = "cell" id="botmid"><p id ="8" class ="celltext">&nbsp;</p></div>
+				<div class = "cell" ><p id ="9" class ="celltext">&nbsp;</p></div>
 			</div>
 		</div>
 		<div id="sider"> 
 				<h3>Away</h3>
-				<h4>00</h4>
+				<h4 id="away_score">00</h4>
 		</div>
+	
+	<div id="pop">
+			<h2 id"tit">Welcome!</h2>
+			<div id="startb"><span id="starttext">Start Game</span>
+			</div>
 	</div>
-
-	<div class="pop">
-		<h2>Welcome!</h2>
-		<button> Start Game </button>
 	</div>
-
+	<div id="playagain">Play Again ?</div>	
+	<div id="homewin"></div>
+	<div id="awaywin"></div>
+<script type="text/javascript" src="script.js"></script>
 </body>
 </html>

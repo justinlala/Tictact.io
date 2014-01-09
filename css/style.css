@@ -1,0 +1,218 @@
+#content {
+	width: 100%;
+}
+body {
+	z-index: 0;
+	background-color: white;
+}
+.main {
+	position: relative;
+	z-index: 1;
+	width: 309.1px;
+	height: 375px;
+	margin: 100 auto;
+	background-color: #aaa;
+	transition: 0.5s;
+
+}
+.row {
+
+}
+.cell {
+	z-index: 2;
+	background-color: white;
+	height: 77px;
+	width: 100px;
+	display: inline-block;
+	text-align: center;
+	margin-top: 5px;
+	font-size: 40px;
+	padding-top: 45px;
+	transition: 0.5s;
+}
+.row:nth-child(1) .cell {
+	margin-top: 0;
+}
+.cell:hover {
+	background-color: #ddd;
+}
+#center {
+}
+#center:hover {
+	background-color: orange;
+	curson: pointer;
+}
+#cen:hover {
+	background-color: red;
+	curson: pointer;
+}
+header:hover{
+	color: white;
+	background-color: #aaa;
+	
+}
+#quit {
+	font-size: 50px;
+	font-family: 'Exo', sans-serif;
+	color: white;
+	text-align: center;
+	float: right;
+}
+#pop{
+
+	position: relative;
+	transition: 9s;
+	width: 400px;
+	height: 200px;
+	font-size: 50px;
+	font-family: 'Exo', sans-serif;
+	opacity: 0;
+	text-align: center;
+	display: none;
+	margin: 0 auto;
+	margin-top: -441px;
+	
+}
+#pop.open2 {
+
+	z-index: 7;
+	opacity: 1;
+	display: block;
+	font-weight: 100;
+
+}
+
+button {
+
+}
+header {
+	padding: 0px 10px;
+	border-bottom: 1px solid #aaa;
+	margin-left: 0;
+	margin-right: 0;
+	color: #aaa;
+	font-size: 50px;
+	font-family: 'Exo', sans-serif;
+}
+
+h3, h4 {
+	background-color: rgba(0,0,0,0);
+	font-family: 'Exo', sans-serif;
+	font-size: 30px;
+	margin-bottom: 0;
+	text-decoration: underline;
+	color: #aaa;
+	transition: 3s;
+}
+h4 {
+
+	text-decoration: none;
+}
+.celltext {
+	display: inline-block;
+	font-family: 'Exo', sans-serif;
+	font-size: 70px;
+	color: orange;
+	margin-top: -34px;
+	margin-bottom: 0px;
+	padding-top: 0px;
+
+}
+
+
+#sider {
+	
+	position: absolute;
+	top: 83px;
+	left: 75%;
+	text-align: right;
+	display: none;
+	opacity: 0;
+	transition: 2s;
+	z-index: 2;
+	
+}
+#sidel {
+	position: absolute;
+	top: 83px;
+	right: 75%;
+	display: none;
+	opacity: 0;
+	transition: 2s;
+	z-index: 2;
+	
+}
+#startb {
+	margin-top: -12px;
+	width: 400px;
+	margin-left: 0;
+	transition: 0.5s;
+
+}
+#startb:hover {
+	color: black;
+	background-color: #aaa;
+	curson: pointer;
+}
+#starttext {
+	text-align: center;
+	font-size: 30px;
+	color: white;
+	transition: 0.5s;
+}
+#tit {
+	margin-top: 100px;
+}
+h3.win {
+	transition: 2s;
+	color: red;
+}
+#playagain {
+
+	z-index: 0;
+	position: absolute;
+	top: 66px;
+	left: 0px;
+	width: 100%;
+	height: 100%;
+	opacity: 1;
+	background-color: #aaa;
+	display: none;
+	text-align: center;
+	padding-top: 23px;
+	font-size: 50px;
+	font-family: 'Exo', sans-serif;
+	color: white;
+
+}
+#homewin {
+
+	z-index: 1;
+	position: absolute;
+	top: 66px;
+	left: 0;
+	width: 50%;
+	height: 1000px;
+	opacity: .5;
+	background-color: orange;
+	display: none;
+	border-right: 1px dashed red;
+	transition: 2s;
+	overflow: hidden;
+}
+#awaywin {
+
+	z-index: 1;
+	position: absolute;
+	top: 66px;
+	right: 0;
+	width: 50%;
+	height: 1000px;
+	opacity: .5;
+	background-color: orange;
+	display: none;
+	border-left: 1px dashed red;
+	transition: 2s;
+	overflow: hidden;
+}
+
