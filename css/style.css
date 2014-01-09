@@ -8,7 +8,7 @@ body {
 .main {
 	position: relative;
 	z-index: 1;
-	width: 309.1px;
+	width: 308px;
 	height: 375px;
 	margin: 100 auto;
 	background-color: #aaa;
@@ -46,11 +46,7 @@ body {
 	background-color: red;
 	curson: pointer;
 }
-header:hover{
-	color: white;
-	background-color: #aaa;
-	
-}
+
 #quit {
 	font-size: 50px;
 	font-family: 'Exo', sans-serif;
@@ -58,7 +54,7 @@ header:hover{
 	text-align: center;
 	float: right;
 }
-#pop{
+#pop, #winnerbox{
 
 	position: relative;
 	transition: 9s;
@@ -73,13 +69,12 @@ header:hover{
 	margin-top: -441px;
 	
 }
-#pop.open2 {
+#pop.open2, #winnerbox.open2 {
 
 	z-index: 7;
 	opacity: 1;
 	display: block;
 	font-weight: 100;
-
 }
 
 button {
@@ -94,7 +89,12 @@ header {
 	font-size: 50px;
 	font-family: 'Exo', sans-serif;
 }
-
+header:hover{
+	color: white;
+	background-color: #aaa;
+	border-bottom-color: white;
+	
+}
 h3, h4 {
 	background-color: rgba(0,0,0,0);
 	font-family: 'Exo', sans-serif;
@@ -105,7 +105,7 @@ h3, h4 {
 	transition: 3s;
 }
 h4 {
-
+	text-align: center;
 	text-decoration: none;
 }
 .celltext {
@@ -142,23 +142,50 @@ h4 {
 	z-index: 2;
 	
 }
+#winnerbox h2 {
+	font-size: 70px;
+}
+#winb {
+	margin-top: -12px;
+	width: 400px;
+	margin-left: 0;
+	font-size: 30px;
+	background-color: #aaa;
+}
+#winb:hover {
+	color: orange;
+	curson: pointer;
+	transition: .5s;
+	
+}
+#winnerbox #starttext {
+	text-align: center;
+	color: white;
+	transition: .5s;
+}
+#winnerbox #tit {
+	margin-top: 100px;
+}
+
 #startb {
 	margin-top: -12px;
 	width: 400px;
 	margin-left: 0;
-	transition: 0.5s;
+	font-size: 30px;
 
 }
 #startb:hover {
-	color: black;
+	
 	background-color: #aaa;
 	curson: pointer;
+
+	transition: .5s;
+	
 }
 #starttext {
 	text-align: center;
-	font-size: 30px;
 	color: white;
-	transition: 0.5s;
+	transition: .5s;
 }
 #tit {
 	margin-top: 100px;
@@ -167,7 +194,7 @@ h3.win {
 	transition: 2s;
 	color: red;
 }
-#playagain {
+#graybox {
 
 	z-index: 0;
 	position: absolute;
@@ -175,7 +202,6 @@ h3.win {
 	left: 0px;
 	width: 100%;
 	height: 100%;
-	opacity: 1;
 	background-color: #aaa;
 	display: none;
 	text-align: center;
@@ -184,6 +210,25 @@ h3.win {
 	font-family: 'Exo', sans-serif;
 	color: white;
 
+}
+#playagain {
+
+	z-index: 2;
+	position: absolute;
+	top: 66px;
+	left: 0px;
+	width: 100%;
+	height: 100%;
+	display: none;
+	text-align: center;
+	padding-top: 23px;
+	font-size: 50px;
+	font-family: 'Exo', sans-serif;
+	color: white;
+
+}
+#playagaintext {
+	padding-left: 18px;
 }
 #homewin {
 

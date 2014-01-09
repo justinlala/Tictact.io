@@ -7,6 +7,8 @@ var win = false;
 var winner = "";
 var vboard = ["","","","","","","","",""];
 var board = [["","",""],["","",""],["","",""]];
+var bestof = 3;
+var gamewin = false;
 
 function startGame() {
 	document.getElementById("sidel").style.display = 'block';
@@ -50,8 +52,8 @@ function convert_table(){
 
 }
 function update() {
-   document.getElementById("home_score").innerHTML = player_1[3];
-   document.getElementById("away_score").innerHTML = player_2[3];
+   document.getElementById("home_score").innerHTML = "0" + player_1[3];
+   document.getElementById("away_score").innerHTML = "0" + player_2[3];
 }
 function reset() {
 	start = false;
@@ -76,6 +78,7 @@ function cleanBoard(){
    document.getElementById('homewin').style.display = "none";
    document.getElementById('awaywin').style.display = "none";
    document.getElementById('playagain').style.display = "none";
+   document.getElementById('graybox').style.display = "none";
     for(i=0;i<9;i++)
     {
       document.getElementsByClassName("cell")[i].getElementsByTagName("p")[0].innerHTML = "&nbsp;";
@@ -92,7 +95,7 @@ function open() {
    	 document.getElementById("centl").style.height="200px";
    	 document.getElementById("centr").style.height="200px";
    	 document.getElementsByClassName("main")[0].style.height="499px";
-   	 document.getElementsByClassName("main")[0].style.width="609.1px";
+   	 document.getElementsByClassName("main")[0].style.width="608px";
 
    	 document.getElementById("pop").className = "open2";
 
@@ -108,7 +111,7 @@ function close() {
    	 document.getElementById("centl").style.height="77px";
    	 document.getElementById("centr").style.height="77px";
    	 document.getElementsByClassName("main")[0].style.height="375px";
-   	 document.getElementsByClassName("main")[0].style.width="309.1px";
+   	 document.getElementsByClassName("main")[0].style.width="308px";
 
    	 // document.getElementById("pop").style.opacity="0";
    	 // document.getElementById("pop").style.display="none";
@@ -222,7 +225,10 @@ function wins(winnum) {
       console.log("X wins: " + player_1[3] );
       winFlash("home_score")
       document.getElementById('homewin').style.display = "block";
-      // $("#homet").text(player_1[1] + " wins!").css("color","#5CE62E")
+      if(player_1[3] == bestof)
+      {
+         gamewin = true;
+      }
 
    }
    else {
@@ -231,9 +237,32 @@ function wins(winnum) {
       console.log("O wins: " + player_2[3] );
       winFlash("away_score")
       document.getElementById('awaywin').style.display = "block";
-      // $("#awayt").text(player_2[1] + " wins!").css("color","#5CE62E")
+       if(player_2[3] == bestof)
+      {
+         gamewin = true;
+      }
    }
    return true;
+}
+function gamewinner() {
+      gamewin = false;
+      document.getElementById("center").style.height="200px";
+       document.getElementById("center").style.width="400px";
+       document.getElementById("center").style.backgroundColor="orange";
+
+       document.getElementById("midtop").style.width="400px";
+       document.getElementById("botmid").style.width="400px";
+       document.getElementById("centl").style.height="200px";
+       document.getElementById("centr").style.height="200px";
+       document.getElementsByClassName("main")[0].style.height="499px";
+       document.getElementsByClassName("main")[0].style.width="608px";
+       cleanBoard();
+       lightboard();
+       
+       document.getElementById("winnerbox").className = "open2";
+
+       x=0;
+
 }
 window.onclick = function() 
 {
@@ -283,12 +312,24 @@ window.onclick = function()
                   if(win == true || counter == 10)
                   {
                      document.getElementById('playagain').style.display = "block";
+                     document.getElementById('graybox').style.display = "block";
                      darkboard();
                   }
             }
             
        }
-
+      if(gamewin == true)
+      {
+         gamewinner();
+         document.getElementById("winb").onclick = function() 
+         {  
+            console.log("im here");
+            document.getElementById("winnerbox").className = "";
+            console.log("now here");
+            reset();
+            startGame();
+         }
+      }
       if(win == true || counter == 10)
       {
          document.getElementById("playagain").onclick = function() {
