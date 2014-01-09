@@ -46,6 +46,27 @@ body {
 	background-color: red;
 	curson: pointer;
 }
+#minstart {
+	position: relative;
+	transition: 9s;
+	width: 101px;
+	height: 122px;
+	font-size: 37px;
+	font-family: 'Exo', sans-serif;
+	opacity: 0;
+	text-align: center;
+	display: none;
+	margin: 0 auto;
+	margin-top: -348px;
+	padding-top: 35px;
+	color: white;
+}
+#minstart.open2 {
+	z-index: 7;
+	opacity: 1;
+	display: block;
+	font-weight: 100;
+}
 
 #quit {
 	font-size: 50px;
@@ -53,6 +74,7 @@ body {
 	color: white;
 	text-align: center;
 	float: right;
+	margin-top: -65px;
 }
 #pop, #winnerbox{
 
@@ -89,7 +111,7 @@ header {
 	font-size: 50px;
 	font-family: 'Exo', sans-serif;
 }
-header:hover{
+.shine:hover{
 	color: white;
 	background-color: #aaa;
 	border-bottom-color: white;
@@ -153,7 +175,7 @@ h4 {
 	background-color: #aaa;
 }
 #winb:hover {
-	color: orange;
+	background-color: orange;
 	curson: pointer;
 	transition: .5s;
 	
@@ -245,6 +267,9 @@ h3.win {
 	transition: 2s;
 	overflow: hidden;
 }
+.clear {
+	clear: both;
+}
 #awaywin {
 
 	z-index: 1;
@@ -259,5 +284,64 @@ h3.win {
 	border-left: 1px dashed red;
 	transition: 2s;
 	overflow: hidden;
+}
+@media only screen and (max-width: 400px)  {
+
+	#playagain {
+		font-size: 31px;
+	}
+	h3, h4 {
+		font-size: 20px;
+	}
+	#sidel {
+		top: 65px;
+		right: 80%;
+	}
+	#sider {
+		top: 65px;
+		left: 80%;
+	}
+	header .title, header #quit{
+		width: 200px;
+		margin: 0 auto;
+		text-align: center;
+		transition: 0s;
+	}
+	header .title {
+		top: 0px;
+		transition: 0s;
+	}
+	header .title:hover, header span:hover{
+		opacity: 0;
+		transition: 0s;
+	}
+	header #quit{
+		width: 97%;
+		margin-top: -65px;
+
+	}
+	/*.main .row .cell {
+	z-index: 2;
+	background-color: white;
+	height: 77px;
+	width: 100px;
+	display: inline-block;
+	text-align: center;
+	margin-top: 5px;
+	font-size: 40px;
+	padding-top: 45px;
+	transition: 0.5s;
+	}
+	#content .main {
+		position: relative;
+	z-index: 1;
+	width: 308px;
+	height: 375px;
+	margin: 100 auto;
+	background-color: #aaa;
+	transition: 0.5s;
+	}*/
+
+
 }
 

@@ -54,6 +54,7 @@ function convert_table(){
 function update() {
    document.getElementById("home_score").innerHTML = "0" + player_1[3];
    document.getElementById("away_score").innerHTML = "0" + player_2[3];
+   whole();
 }
 function reset() {
 	start = false;
@@ -61,6 +62,7 @@ function reset() {
 	document.getElementById("sider").style.display = 'none';
    document.getElementById("sidel").style.opacity = '0';
    document.getElementById("sider").style.opacity = '0';
+   document.getElementById("winnerbox").className = "";
    player_2[3] = 0;
    player_1[3] = 0;
 	close();
@@ -86,6 +88,8 @@ function cleanBoard(){
    
 }
 function open() {
+
+      if(document.documentElement.clientWidth > 400){
 	  document.getElementById("center").style.height="200px";
    	 document.getElementById("center").style.width="400px";
    	 document.getElementById("center").style.backgroundColor="orange";
@@ -98,13 +102,20 @@ function open() {
    	 document.getElementsByClassName("main")[0].style.width="608px";
 
    	 document.getElementById("pop").className = "open2";
+      }
+      else {
+          document.getElementById("center").style.backgroundColor="orange";
+          document.getElementById("minstart").className = "open2";
+      }
 
    	 x=0;
 }
 function close() {
-	 document.getElementById("center").style.height="77px";
-   	 document.getElementById("center").style.width="100px";
-   	 document.getElementById("center").style.backgroundColor="white";
+	 
+      var center = document.getElementById("center");
+      center.style.height="77px";
+   	center.style.width="100px";
+   	center.style.backgroundColor="white";
 
    	 document.getElementById("midtop").style.width="100px";
    	 document.getElementById("botmid").style.width="100px";
@@ -264,37 +275,54 @@ function gamewinner() {
        x=0;
 
 }
-window.onclick = function() 
+function whole() 
 {
-    
+
+   console.log("in the else"); 
    if(start == false) {
+
      	document.getElementById("center").onclick = function() {
 
       	if(x==1 && start == false){
       	  open();
+           whole();
       	}
       	else if (x==0 && start == false){
       	  close();
+           whole();
       	}   	 
       }
       document.getElementById("startb").onclick = function() {
       	close();
       	startGame();
+         whole();
       }
       document.getElementById("pop").onclick = function() {
       	close();
+         whole();
       }
       document.getElementById("headr").onclick = function() {
       	reset();
+         document.getElementById("headr").className = "";
+      }
+      document.getElementById("minstart").onclick = function() {
+         startGame();
+         document.getElementById("minstart").className = "";
+         lightboard();
+         whole();
+         
       }
    }
+
    else 
-   {
+   {  
+      document.getElementById("headr").className = "shine";
+      console.log("in the else");
       for(i=0;i<=8;i++)
-      {
+      {  
             document.getElementsByClassName("cell")[i].onclick = function() 
             {
-
+                  console.log("in the for");
                   if(counter <=9 && win == false) 
                   {
 
@@ -314,6 +342,8 @@ window.onclick = function()
                      document.getElementById('playagain').style.display = "block";
                      document.getElementById('graybox').style.display = "block";
                      darkboard();
+                     update();
+
                   }
             }
             
@@ -335,18 +365,22 @@ window.onclick = function()
          document.getElementById("playagain").onclick = function() {
             cleanBoard();
             lightboard();
+            update();
          }
          document.getElementById("awaywin").onclick = function() {
             cleanBoard();
             lightboard();
+            update();
          }
          document.getElementById("homewin").onclick = function() {
             cleanBoard();
             lightboard();
+            update();
          }
          document.getElementById("awaywin").onclick = function() {
             cleanBoard();
             lightboard();
+            update();
          }
          for(i=0;i<=8;i++)
          {
@@ -354,13 +388,14 @@ window.onclick = function()
                {
                   cleanBoard();
                   lightboard();
+                  update();
 
                }
          }
       }
 
    }  
-   
+    
 }
 
 
