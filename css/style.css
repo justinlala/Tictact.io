@@ -52,6 +52,42 @@ body {
 	padding-top: 45px;
 	transition: 0.5s;
 }
+
+
+
+}
+.centersmallopen {
+	z-index: 2;
+	background-color: orange;
+	height: 77px;
+	width: 100px;
+	display: inline-block;
+	text-align: center;
+	margin-top: 5px;
+	font-size: 40px;
+	padding-top: 45px;
+	transition: 0.5s;
+
+}
+.centerplay, .centerclosed {
+	z-index: 2;
+	background-color: white;
+	height: 77px;
+	width: 100px;
+	display: inline-block;
+	text-align: center;
+	margin-top: 5px;
+	font-size: 40px;
+	padding-top: 45px;
+	transition: 0.5s;
+}
+.centerplay:hover {
+	background-color: #ddd;
+	color: #aaa;
+}
+.centerclosed:hover {
+	background-color: orange;
+}
 .centeropenwin{
 	z-index: 2;
 	background-color: orange;
@@ -102,25 +138,22 @@ body {
 .cell:hover, .midrowopen:hover, .midcolopen:hover {
 	background-color: #ddd;
 }
-#center {
-}
-#center:hover {
+
+.centeropen:hover {
 	background-color: orange;
 	cursor: pointer;
 
-}
-#center:hover p {
-	color: white;
 }
 #cen:hover {
 	background-color: red;
 	cursor: pointer;
 }
+
 #minstart {
 	position: relative;
 	transition: 9s;
 	width: 101px;
-	height: 122px;
+	height: 87px;
 	font-size: 37px;
 	font-family: 'Exo', sans-serif;
 	opacity: 0;
@@ -130,6 +163,7 @@ body {
 	margin-top: -348px;
 	padding-top: 35px;
 	color: white;
+	background-color: orange;
 }
 #minstart.open2 {
 	z-index: 7;
@@ -422,7 +456,7 @@ h3.win {
 		margin-top: -65px;
 
 	}
-	#center:hover {
+	.centerclosed:hover {
 	background-color: #orange;
 	cursor: pointer;
 }

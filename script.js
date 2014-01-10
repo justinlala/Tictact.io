@@ -13,6 +13,7 @@ var gamewin = false;
 var sideLeft = document.getElementById("sidel");
 var sideRight = document.getElementById("sider");
 var winBox = document.getElementById("winnerbox");
+var center = document.getElementById("center");
 var first = false;
 var tie = false;
 
@@ -120,9 +121,10 @@ function cleanBoard(){
 }
 function open() {
 
+      
       if(document.documentElement.clientWidth > 624){
-	      var center = document.getElementById("center");
-         center.className = "centeropen";
+	      
+         center.className = "cell centeropen";
          document.getElementById("midtop").className = "midcolopen";
          document.getElementById("botmid").className = "midcolopen";
          document.getElementById("centl").className = "midrowopen";
@@ -133,7 +135,7 @@ function open() {
    	 document.getElementById("pop").className = "open2";
       }
       else {
-          document.getElementById("center").style.backgroundColor="orange";
+          center.className = "cell centersmallopen";
           document.getElementById("minstart").className = "open2";
       }
 
@@ -141,8 +143,9 @@ function open() {
 }
 function close() {
 	 
-      var center = document.getElementById("center");
-      center.className = "cell"
+      if(document.documentElement.clientWidth > 624){
+      center.className = (start == true ? "cell centerplay":"cell centerclosed");
+
 
    	 document.getElementById("midtop").className = "cell";
        document.getElementById("botmid").className = "cell";
@@ -154,7 +157,16 @@ function close() {
    	 // document.getElementById("pop").style.opacity="0";
    	 // document.getElementById("pop").style.display="none";
      //   document.getElementById("pop").style.zIndex="-1";
-     document.getElementById("pop").className = "";
+       document.getElementById("pop").className = "";
+      }
+      else {
+         console.log("testtestest");
+          center.className = (start == true ? "cell centerplay":"cell centerclosed");
+          document.getElementById("minstart").className = "";
+      }
+
+
+
    	 x=1;
  
 }
@@ -261,7 +273,6 @@ function gamewinner() {
       cleanBoard();
       lightboard();
       if(document.documentElement.clientWidth > 624){
-         var center = document.getElementById("center");
          center.className = "centeropenwin"
          document.getElementById("midtop").className = "midcolopen";
          document.getElementById("botmid").className = "midcolopen";
@@ -308,14 +319,20 @@ function whole()
          whole();
       }
       document.getElementById("headr").onclick = function() {
+         if(start == true){
       	reset();
+         center.className = "cell centeropen";
          console.log("start: " + start + " x: " + x )
          document.getElementById("headr").className = "";
          whole();
       }
+      else {
+         whole();
+      }
+      }
       document.getElementById("minstart").onclick = function() {
          startGame();
-         document.getElementById("minstart").className = "";
+         close();
          lightboard();
          whole();
          
