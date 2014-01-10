@@ -11,7 +11,7 @@ body {
 	width: 308px;
 	height: 375px;
 	margin: 100 auto;
-	background-color: #aaa;
+	background-color: #ccc;
 	transition: 0.5s;
 
 }
@@ -29,6 +29,9 @@ body {
 	font-size: 40px;
 	padding-top: 45px;
 	transition: 0.5s;
+}
+.cell .fast {
+	transition: 0s;
 }
 .row:nth-child(1) .cell {
 	margin-top: 0;
@@ -66,6 +69,30 @@ body {
 	opacity: 1;
 	display: block;
 	font-weight: 100;
+}
+#minWin {
+	position: relative;
+	transition: 0.5s;
+	width: 101px;
+	height: 101px;
+	font-size: 30px;
+	font-family: 'Exo', sans-serif;
+	opacity: 0;
+	text-align: center;
+	display: none;
+	margin: 0 auto;
+	margin-top: -348px;
+	padding-top: 21px;
+	color: black;
+}
+#minWin.open2 {
+	z-index: 7;
+	opacity: 1;
+	display: block;
+	font-weight: 100;
+}
+#minWin.open2:hover {
+	background-color: orange;
 }
 
 #quit {
@@ -113,7 +140,7 @@ header {
 }
 .shine:hover{
 	color: white;
-	background-color: #aaa;
+	background-color: #ccc;
 	border-bottom-color: white;
 	
 }
@@ -123,7 +150,7 @@ h3, h4 {
 	font-size: 30px;
 	margin-bottom: 0;
 	text-decoration: underline;
-	color: #aaa;
+	color: #ccc;
 	transition: 3s;
 }
 h4 {
@@ -172,7 +199,7 @@ h4 {
 	width: 400px;
 	margin-left: 0;
 	font-size: 30px;
-	background-color: #aaa;
+	background-color: #ccc;
 }
 #winb:hover {
 	background-color: orange;
@@ -198,7 +225,7 @@ h4 {
 }
 #startb:hover {
 	
-	background-color: #aaa;
+	background-color: #ccc;
 	curson: pointer;
 
 	transition: .5s;
@@ -224,7 +251,7 @@ h3.win {
 	left: 0px;
 	width: 100%;
 	height: 100%;
-	background-color: #aaa;
+	background-color: #ccc;
 	display: none;
 	text-align: center;
 	padding-top: 23px;
@@ -320,6 +347,10 @@ h3.win {
 		margin-top: -65px;
 
 	}
+	#center:hover {
+	background-color: #orange;
+	curson: pointer;
+}
 	/*.main .row .cell {
 	z-index: 2;
 	background-color: white;

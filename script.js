@@ -9,12 +9,17 @@ var vboard = ["","","","","","","","",""];
 var board = [["","",""],["","",""],["","",""]];
 var bestof = 3;
 var gamewin = false;
+var sideLeft = document.getElementById("sidel");
+var sideRight = document.getElementById("sider");
+var winBox = document.getElementById("winnerbox");
 
+
+// This function starts the game. meaning it goes into game mode and out of intro mode. 
 function startGame() {
-	document.getElementById("sidel").style.display = 'block';
-	document.getElementById("sider").style.display = 'block';
-   document.getElementById("sidel").style.opacity = '1';
-   document.getElementById("sider").style.opacity = '1';
+	sideLeft.style.display = 'block';
+	sideRight.style.display = 'block';
+   sideLeft.style.opacity = '1';
+   sideRight.style.opacity = '1';
    cleanBoard();
 	start = true;
 }
@@ -37,17 +42,11 @@ function dis_board() {
    console.log(" 10:" + board[1][0] + " 11:" + board[1][1] + " 12:" + board[1][2]);
    console.log(" 20:" + board[2][0] + " 21:" + board[2][1] + " 22:" + board[2][2]);
 }
-function convert_table(){
-   board[0][0] = vboard[0];
-   console.log("board: " + board[0][0]);
-   board[0][1] = vboard[1];
-   board[0][2] = vboard[2];
-   board[1][0] = vboard[3];
-   board[1][1] = vboard[4];
-   board[1][2] = vboard[5];
-   board[2][0] = vboard[6];
-   board[2][1] = vboard[7];
-   board[2][2] = vboard[8];
+function convert_table() {
+
+   for(var i in vboard){
+      board[Math.floor(i/3)][i%3] = vboard[i];
+   }
    dis_board();
 
 }
@@ -58,11 +57,11 @@ function update() {
 }
 function reset() {
 	start = false;
-	document.getElementById("sidel").style.display = 'none';
-	document.getElementById("sider").style.display = 'none';
-   document.getElementById("sidel").style.opacity = '0';
-   document.getElementById("sider").style.opacity = '0';
-   document.getElementById("winnerbox").className = "";
+	sideLeft.style.display = 'none';
+	sideRight.style.display = 'none';
+   sideLeft.style.opacity = '0';
+   sideRight.style.opacity = '0';
+   winBox.className = "";
    player_2[3] = 0;
    player_1[3] = 0;
 	close();
@@ -89,7 +88,7 @@ function cleanBoard(){
 }
 function open() {
 
-      if(document.documentElement.clientWidth > 400){
+      if(document.documentElement.clientWidth > 624){
 	  document.getElementById("center").style.height="200px";
    	 document.getElementById("center").style.width="400px";
    	 document.getElementById("center").style.backgroundColor="orange";
@@ -135,7 +134,7 @@ function darkboard() {
    console.log("hi");
    for(i=0;i<=8;i++)
       {
-            document.getElementsByClassName("cell")[i].style.backgroundColor = "#aaa";
+            document.getElementsByClassName("cell")[i].style.backgroundColor = "#ccc";
          
       }
       // document.getElementsByTagName('body')[0].style.backgroundColor = "#aaa";
@@ -151,6 +150,7 @@ function lightboard() {
    for(i=0;i<=8;i++)
       {
             document.getElementsByClassName("cell")[i].style.backgroundColor = "white";
+            document.getElementsByClassName("cell")[i].className = "cell";
          
       }
       // document.getElementsByTagName('body')[0].style.backgroundColor = "white";
@@ -163,7 +163,7 @@ function lightboard() {
 function checkWin() {
 
    for(i = 0; i < 3; i++ ){
-      var y = 0; z = 0; c = 0; p = 0; t =0; q = 0;
+      var y = 0; z = 0; c = 0; p = 0; t = 0; q = 0;
       for(f = 0; f < 3; f++){
          if(board[i][f] == player_1[0]){
             y += 1;
@@ -191,32 +191,6 @@ function checkWin() {
          return wins(2);
       }
    }
-   // var y = 0; x = 0; c = 0; p = 0;
-   // for(i = 0; i < 3; i++ ){
-      
-   //    for(f = 2; f >= 0; f--){
-   //       if(board[i][f] == player_1[0]){
-   //          y += 1;
-   //       }
-   //       if(board[f][i] == player_1[0]){
-   //          c += 1;
-   //       }
-   //       if(board[i][f] == player_2[0]){
-   //          x += 1;
-   //       }
-   //       if(board[f][i] == player_2[0]){
-   //          p += 1;
-   //       }
-   //    }
-   //    if(y == 3 || c == 3) {
-   //       return wins(1);
-   //    }
-   //    if(x == 3 || p == 3) {
-   //       return wins(2);
-   //    }
-   // }
-
-
 
    if(board[0][2] == "X" && board[1][1] == "X" && board[2][0] == "X" ) {
       return wins(1);
@@ -234,7 +208,7 @@ function wins(winnum) {
       player_1[3] += 1;
       winner = player_1[1];
       console.log("X wins: " + player_1[3] );
-      winFlash("home_score")
+      // winFlash("home_score");
       document.getElementById('homewin').style.display = "block";
       if(player_1[3] == bestof)
       {
@@ -246,7 +220,7 @@ function wins(winnum) {
       player_2[3] += 1;
       winner = player_2[1];
       console.log("O wins: " + player_2[3] );
-      winFlash("away_score")
+      // winFlash("away_score");
       document.getElementById('awaywin').style.display = "block";
        if(player_2[3] == bestof)
       {
@@ -257,6 +231,8 @@ function wins(winnum) {
 }
 function gamewinner() {
       gamewin = false;
+
+      if(document.documentElement.clientWidth > 624){
       document.getElementById("center").style.height="200px";
        document.getElementById("center").style.width="400px";
        document.getElementById("center").style.backgroundColor="orange";
@@ -271,7 +247,12 @@ function gamewinner() {
        lightboard();
        
        document.getElementById("winnerbox").className = "open2";
-
+      }
+      else {
+         cleanBoard();
+         lightboard();
+         document.getElementById("minWin").className = "open2";
+      }
        x=0;
 
 }
@@ -308,6 +289,13 @@ function whole()
       document.getElementById("minstart").onclick = function() {
          startGame();
          document.getElementById("minstart").className = "";
+         lightboard();
+         whole();
+         
+      }
+      document.getElementById("minWin").onclick = function() {
+         startGame();
+         document.getElementById("minWin").className = "";
          lightboard();
          whole();
          
