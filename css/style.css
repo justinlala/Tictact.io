@@ -4,6 +4,12 @@
 body {
 	z-index: 0;
 	background-color: white;
+	-webkit-user-select: none;  
+  	-moz-user-select: none;    
+  	-ms-user-select: none;      
+  	user-select: none;
+  	font-family: 'Exo', sans-serif;
+
 }
 .main {
 	position: relative;
@@ -18,6 +24,7 @@ body {
 .row {
 
 }
+
 .cell {
 	z-index: 2;
 	background-color: white;
@@ -30,24 +37,84 @@ body {
 	padding-top: 45px;
 	transition: 0.5s;
 }
+.dark {
+	background-color: #ccc;
+}
+.centeropen{
+	z-index: 2;
+	background-color: orange;
+	height: 200px;
+	width: 400px;
+	display: inline-block;
+	text-align: center;
+	margin-top: 5px;
+	font-size: 40px;
+	padding-top: 45px;
+	transition: 0.5s;
+}
+.centeropenwin{
+	z-index: 2;
+	background-color: orange;
+	height: 200px;
+	width: 400px;
+	display: inline-block;
+	text-align: center;
+	margin-top: 5px;
+	font-size: 40px;
+	padding-top: 45px;
+	transition: 0.5s;
+}
+.midrowopen{
+	z-index: 2;
+	background-color: white;
+	height: 200px;
+	width: 100px;
+	display: inline-block;
+	text-align: center;
+	margin-top: 5px;
+	font-size: 40px;
+	padding-top: 45px;
+	transition: 0.5s;
+
+}
+.midcolopen {
+	z-index: 2;
+	background-color: white;
+	height: 77px;
+	width: 400px;
+	display: inline-block;
+	text-align: center;
+	margin-top: 5px;
+	font-size: 40px;
+	padding-top: 45px;
+	transition: 0.5s;
+
+}
 .cell .fast {
 	transition: 0s;
 }
 .row:nth-child(1) .cell {
 	margin-top: 0;
 }
-.cell:hover {
+#midtop {
+	margin-top: 0;
+}
+.cell:hover, .midrowopen:hover, .midcolopen:hover {
 	background-color: #ddd;
 }
 #center {
 }
 #center:hover {
 	background-color: orange;
-	curson: pointer;
+	cursor: pointer;
+
+}
+#center:hover p {
+	color: white;
 }
 #cen:hover {
 	background-color: red;
-	curson: pointer;
+	cursor: pointer;
 }
 #minstart {
 	position: relative;
@@ -203,7 +270,7 @@ h4 {
 }
 #winb:hover {
 	background-color: orange;
-	curson: pointer;
+	cursor: pointer;
 	transition: .5s;
 	
 }
@@ -226,7 +293,7 @@ h4 {
 #startb:hover {
 	
 	background-color: #ccc;
-	curson: pointer;
+	cursor: pointer;
 
 	transition: .5s;
 	
@@ -312,6 +379,14 @@ h3.win {
 	transition: 2s;
 	overflow: hidden;
 }
+#bestofbox {
+	width: 308px;
+	margin: 0 auto;
+	margin-top: -100px;
+	color: orange;
+	transition: 0.5s;
+
+}
 @media only screen and (max-width: 400px)  {
 
 	#playagain {
@@ -349,7 +424,7 @@ h3.win {
 	}
 	#center:hover {
 	background-color: #orange;
-	curson: pointer;
+	cursor: pointer;
 }
 	/*.main .row .cell {
 	z-index: 2;

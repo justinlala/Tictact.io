@@ -8,20 +8,33 @@ var winner = "";
 var vboard = ["","","","","","","","",""];
 var board = [["","",""],["","",""],["","",""]];
 var bestof = 3;
+var gamenum = 1;
 var gamewin = false;
 var sideLeft = document.getElementById("sidel");
 var sideRight = document.getElementById("sider");
 var winBox = document.getElementById("winnerbox");
+var first = false;
+var tie = false;
 
 
 // This function starts the game. meaning it goes into game mode and out of intro mode. 
 function startGame() {
+
 	sideLeft.style.display = 'block';
 	sideRight.style.display = 'block';
    sideLeft.style.opacity = '1';
    sideRight.style.opacity = '1';
    cleanBoard();
+   update();
 	start = true;
+}
+//this function runs when user chooses to play again. it advances the game num.
+function gamePlayagain() {
+
+            cleanBoard();
+            lightboard();
+            gamenum++;
+            update();
 }
 function checkTurn() {
    if(counter % 2 == 0) {
@@ -31,8 +44,21 @@ function checkTurn() {
       return player_1[0];
    }
 }
+function winButtonClick() {
+   document.getElementById("winb").onclick = function() 
+         {  
+            console.log("im here");
+            document.getElementById("winnerbox").getElementsByTagName("h2").innerHTML = "It's a tie!";
+            document.getElementById("winnerbox").className = "";
+            document.getElementById("bestofbox").style.width = "308px";
+            document.getElementById("winnerbox").getElementsByTagName("h2").innerHTML = "Game Over";
+            console.log("now here");
+            reset();
+            startGame();
+         }
+}
 function winFlash(winclass) {
-      document.getElementById(winclass).parentNode.getElementsByTagName('h3')[0].style.color = "black";
+      document.getElementById(winclass).parentNode.getElementsByTagName('h3')[0].style.color = "orange";
       console.log("winner " + winclass);
      
 }
@@ -53,6 +79,8 @@ function convert_table() {
 function update() {
    document.getElementById("home_score").innerHTML = "0" + player_1[3];
    document.getElementById("away_score").innerHTML = "0" + player_2[3];
+   document.getElementById("bestofbox").getElementsByTagName('div')[0].innerHTML = checkTurn();
+   document.getElementById("bestofbox").getElementsByTagName('div')[1].innerHTML = gamenum + "/" + bestof;
    whole();
 }
 function reset() {
@@ -64,13 +92,16 @@ function reset() {
    winBox.className = "";
    player_2[3] = 0;
    player_1[3] = 0;
+   gamenum = 1;
 	close();
    cleanBoard();
    lightboard();
    update();
+   document.getElementById("bestofbox").getElementsByTagName('div')[0].innerHTML = "";
+   document.getElementById("bestofbox").getElementsByTagName('div')[1].innerHTML = "";
 }
 function cleanBoard(){
-   counter = 1;
+   counter = (first == false ? 1:2);
    vboard = ["","","","","","","","",""];
    board = [["","",""],["","",""],["","",""]];
    win = false;
@@ -80,6 +111,7 @@ function cleanBoard(){
    document.getElementById('awaywin').style.display = "none";
    document.getElementById('playagain').style.display = "none";
    document.getElementById('graybox').style.display = "none";
+
     for(i=0;i<9;i++)
     {
       document.getElementsByClassName("cell")[i].getElementsByTagName("p")[0].innerHTML = "&nbsp;";
@@ -89,16 +121,14 @@ function cleanBoard(){
 function open() {
 
       if(document.documentElement.clientWidth > 624){
-	  document.getElementById("center").style.height="200px";
-   	 document.getElementById("center").style.width="400px";
-   	 document.getElementById("center").style.backgroundColor="orange";
-
-   	 document.getElementById("midtop").style.width="400px";
-   	 document.getElementById("botmid").style.width="400px";
-   	 document.getElementById("centl").style.height="200px";
-   	 document.getElementById("centr").style.height="200px";
-   	 document.getElementsByClassName("main")[0].style.height="499px";
-   	 document.getElementsByClassName("main")[0].style.width="608px";
+	      var center = document.getElementById("center");
+         center.className = "centeropen";
+         document.getElementById("midtop").className = "midcolopen";
+         document.getElementById("botmid").className = "midcolopen";
+         document.getElementById("centl").className = "midrowopen";
+         document.getElementById("centr").className = "midrowopen";
+         document.getElementsByClassName("main")[0].style.height="499px";
+         document.getElementsByClassName("main")[0].style.width="608px";
 
    	 document.getElementById("pop").className = "open2";
       }
@@ -112,14 +142,12 @@ function open() {
 function close() {
 	 
       var center = document.getElementById("center");
-      center.style.height="77px";
-   	center.style.width="100px";
-   	center.style.backgroundColor="white";
+      center.className = "cell"
 
-   	 document.getElementById("midtop").style.width="100px";
-   	 document.getElementById("botmid").style.width="100px";
-   	 document.getElementById("centl").style.height="77px";
-   	 document.getElementById("centr").style.height="77px";
+   	 document.getElementById("midtop").className = "cell";
+       document.getElementById("botmid").className = "cell";
+       document.getElementById("centl").className = "cell";
+       document.getElementById("centr").className = "cell";
    	 document.getElementsByClassName("main")[0].style.height="375px";
    	 document.getElementsByClassName("main")[0].style.width="308px";
 
@@ -134,7 +162,7 @@ function darkboard() {
    console.log("hi");
    for(i=0;i<=8;i++)
       {
-            document.getElementsByClassName("cell")[i].style.backgroundColor = "#ccc";
+            document.getElementsByClassName("cell")[i].className = "cell dark";
          
       }
       // document.getElementsByTagName('body')[0].style.backgroundColor = "#aaa";
@@ -146,14 +174,12 @@ function darkboard() {
 
 }
 function lightboard() {
-   console.log("hi");
-   for(i=0;i<=8;i++)
+
+      for(i=0;i<=8;i++)
       {
-            document.getElementsByClassName("cell")[i].style.backgroundColor = "white";
             document.getElementsByClassName("cell")[i].className = "cell";
          
       }
-      // document.getElementsByTagName('body')[0].style.backgroundColor = "white";
       document.getElementById("home_score").parentNode.getElementsByTagName('h3')[0].style.color = "#aaa";
       document.getElementById("away_score").parentNode.getElementsByTagName('h3')[0].style.color = "#aaa";
       document.getElementById("home_score").style.color = "#aaa";
@@ -210,7 +236,7 @@ function wins(winnum) {
       console.log("X wins: " + player_1[3] );
       // winFlash("home_score");
       document.getElementById('homewin').style.display = "block";
-      if(player_1[3] == bestof)
+      if(player_1[3] == bestof - Math.floor(bestof/2))
       {
          gamewin = true;
       }
@@ -222,43 +248,42 @@ function wins(winnum) {
       console.log("O wins: " + player_2[3] );
       // winFlash("away_score");
       document.getElementById('awaywin').style.display = "block";
-       if(player_2[3] == bestof)
+       if(player_2[3] == bestof - Math.floor(bestof/2))
       {
          gamewin = true;
       }
    }
+   first = !first;
    return true;
 }
 function gamewinner() {
       gamewin = false;
-
+      cleanBoard();
+      lightboard();
       if(document.documentElement.clientWidth > 624){
-      document.getElementById("center").style.height="200px";
-       document.getElementById("center").style.width="400px";
-       document.getElementById("center").style.backgroundColor="orange";
-
-       document.getElementById("midtop").style.width="400px";
-       document.getElementById("botmid").style.width="400px";
-       document.getElementById("centl").style.height="200px";
-       document.getElementById("centr").style.height="200px";
-       document.getElementsByClassName("main")[0].style.height="499px";
-       document.getElementsByClassName("main")[0].style.width="608px";
-       cleanBoard();
-       lightboard();
+         var center = document.getElementById("center");
+         center.className = "centeropenwin"
+         document.getElementById("midtop").className = "midcolopen";
+         document.getElementById("botmid").className = "midcolopen";
+         document.getElementById("centl").className = "midrowopen";
+         document.getElementById("centr").className = "midrowopen";
+         document.getElementsByClassName("main")[0].style.height="499px";
+         document.getElementsByClassName("main")[0].style.width="608px";
+         document.getElementById("bestofbox").style.width = "608px";
        
-       document.getElementById("winnerbox").className = "open2";
+         document.getElementById("winnerbox").className = "open2";
       }
       else {
-         cleanBoard();
-         lightboard();
+         
          document.getElementById("minWin").className = "open2";
+
       }
-       x=0;
+      first = false;
+      x=0;
 
 }
 function whole() 
 {
-
    console.log("in the else"); 
    if(start == false) {
 
@@ -284,7 +309,9 @@ function whole()
       }
       document.getElementById("headr").onclick = function() {
       	reset();
+         console.log("start: " + start + " x: " + x )
          document.getElementById("headr").className = "";
+         whole();
       }
       document.getElementById("minstart").onclick = function() {
          startGame();
@@ -294,10 +321,15 @@ function whole()
          
       }
       document.getElementById("minWin").onclick = function() {
+
          startGame();
          document.getElementById("minWin").className = "";
+         player_2[3] = 0;
+         player_1[3] = 0;
+         update();
          lightboard();
          whole();
+
          
       }
    }
@@ -311,7 +343,7 @@ function whole()
             document.getElementsByClassName("cell")[i].onclick = function() 
             {
                   console.log("in the for");
-                  if(counter <=9 && win == false) 
+                  if(counter <=9 && win == false && start == true) 
                   {
 
                      if(this.getElementsByTagName("p")[0].innerHTML == "&nbsp;") 
@@ -327,56 +359,52 @@ function whole()
                   }
                   if(win == true || counter == 10)
                   {
+                     if(gamenum != bestof){
                      document.getElementById('playagain').style.display = "block";
                      document.getElementById('graybox').style.display = "block";
                      darkboard();
                      update();
+                     }
+                     else {
+                        gamewin = true;
+                        document.getElementById("winnerbox").getElementsByTagName("h2")[0].innerHTML = "It's a tie!";
+                        gamewinner();
+                        tie = true;
+                        winButtonClick();
+                     }
 
                   }
             }
             
-       }
+      }
+
       if(gamewin == true)
       {
-         gamewinner();
-         document.getElementById("winb").onclick = function() 
-         {  
-            console.log("im here");
-            document.getElementById("winnerbox").className = "";
-            console.log("now here");
-            reset();
-            startGame();
+         if(!tie){ 
+            gamewinner();
          }
+         winButtonClick();
       }
       if(win == true || counter == 10)
       {
          document.getElementById("playagain").onclick = function() {
-            cleanBoard();
-            lightboard();
-            update();
+            gamePlayagain();
+            
          }
          document.getElementById("awaywin").onclick = function() {
-            cleanBoard();
-            lightboard();
-            update();
+            gamePlayagain();
          }
          document.getElementById("homewin").onclick = function() {
-            cleanBoard();
-            lightboard();
-            update();
+            gamePlayagain();
          }
          document.getElementById("awaywin").onclick = function() {
-            cleanBoard();
-            lightboard();
-            update();
+            gamePlayagain();
          }
          for(i=0;i<=8;i++)
          {
                document.getElementsByClassName("cell")[i].onclick = function() 
                {
-                  cleanBoard();
-                  lightboard();
-                  update();
+                  gamePlayagain();
 
                }
          }
