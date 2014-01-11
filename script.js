@@ -1,4 +1,4 @@
-var player_1 = ["X", "Home", true, 0];
+var player_1 = ["X", "Home", true, 0];// Player
 var player_2 = ["O", "Away", false, 0];
 var x = 1;
 var start = false;
@@ -6,7 +6,7 @@ var counter = 1;
 var win = false;
 var winner = "";
 var vboard = ["","","","","","","","",""];
-var board = [["","",""],["","",""],["","",""]];
+var board = [[,,],[,,],[,,]];
 var bestof = 3;
 var gamenum = 1;
 var gamewin = false;
@@ -21,170 +21,188 @@ var tie = false;
 // This function starts the game. meaning it goes into game mode and out of intro mode. 
 function startGame() {
 
+   start = true;
 	sideLeft.style.display = 'block';
 	sideRight.style.display = 'block';
    sideLeft.style.opacity = '1';
    sideRight.style.opacity = '1';
    cleanBoard();
    update();
-	start = true;
 }
+
 //this function runs when user chooses to play again. it advances the game num.
 function gamePlayagain() {
 
-            cleanBoard();
-            lightboard();
-            gamenum++;
-            update();
+         cleanBoard();
+         lightboard();
+         gamenum++;
+         update();
 }
+
+// Returns "X" or "0"
 function checkTurn() {
-   if(counter % 2 == 0) {
-      return player_2[0];
-   }
-   else {
-      return player_1[0];
-   }
+
+         if(counter % 2 == 0) {
+            return player_2[0];
+         }
+         else {
+            return player_1[0];
+         }
 }
+
+//Performs actions to be taken when win button clicked
 function winButtonClick() {
-   document.getElementById("winb").onclick = function() 
-         {  
+
+         document.getElementById("winb").onclick = function() {  
             console.log("im here");
-            document.getElementById("winnerbox").getElementsByTagName("h2").innerHTML = "It's a tie!";
+            document.getElementById("minWin").className = "";
             document.getElementById("winnerbox").className = "";
             document.getElementById("bestofbox").style.width = "308px";
             document.getElementById("winnerbox").getElementsByTagName("h2").innerHTML = "Game Over";
+            document.getElementById("minWin").innerHTML = "Game<br />Over";
             console.log("now here");
             reset();
             startGame();
          }
 }
+
+//flashes winners name
 function winFlash(winclass) {
-      document.getElementById(winclass).parentNode.getElementsByTagName('h3')[0].style.color = "orange";
-      console.log("winner " + winclass);
-     
+         document.getElementById(winclass).parentNode.getElementsByTagName('h3')[0].style.color = "orange";
+         console.log("winner " + winclass);   
 }
 
+// Displays board to console
 function dis_board() {
-   console.log(" 00:" + board[0][0] + " 01:" + board[0][1] + " 02:" + board[0][2]);
-   console.log(" 10:" + board[1][0] + " 11:" + board[1][1] + " 12:" + board[1][2]);
-   console.log(" 20:" + board[2][0] + " 21:" + board[2][1] + " 22:" + board[2][2]);
+         console.log(" 00:" + board[0][0] + " 01:" + board[0][1] + " 02:" + board[0][2]);
+         console.log(" 10:" + board[1][0] + " 11:" + board[1][1] + " 12:" + board[1][2]);
+         console.log(" 20:" + board[2][0] + " 21:" + board[2][1] + " 22:" + board[2][2]);
 }
+
+//Converts array of play values into a 2d array that i use to test win conditions
 function convert_table() {
 
-   for(var i in vboard){
-      board[Math.floor(i/3)][i%3] = vboard[i];
-   }
-   dis_board();
+         for(var i in vboard){
+            board[Math.floor(i/3)][i%3] = vboard[i];
+         }
+         dis_board();
 
 }
+
+//Updates all important values to the screen. Scores and game # and turn
 function update() {
-   document.getElementById("home_score").innerHTML = "0" + player_1[3];
-   document.getElementById("away_score").innerHTML = "0" + player_2[3];
-   document.getElementById("bestofbox").getElementsByTagName('div')[0].innerHTML = checkTurn();
-   document.getElementById("bestofbox").getElementsByTagName('div')[1].innerHTML = gamenum + "/" + bestof;
-   whole();
-}
-function reset() {
-	start = false;
-	sideLeft.style.display = 'none';
-	sideRight.style.display = 'none';
-   sideLeft.style.opacity = '0';
-   sideRight.style.opacity = '0';
-   winBox.className = "";
-   player_2[3] = 0;
-   player_1[3] = 0;
-   gamenum = 1;
-	close();
-   cleanBoard();
-   lightboard();
-   update();
-   document.getElementById("bestofbox").getElementsByTagName('div')[0].innerHTML = "";
-   document.getElementById("bestofbox").getElementsByTagName('div')[1].innerHTML = "";
-}
-function cleanBoard(){
-   counter = (first == false ? 1:2);
-   vboard = ["","","","","","","","",""];
-   board = [["","",""],["","",""],["","",""]];
-   win = false;
-   document.getElementById("home_score").parentNode.getElementsByTagName('h3')[0].style.color = "#aaa";
-   document.getElementById("away_score").parentNode.getElementsByTagName('h3')[0].style.color = "#aaa";
-   document.getElementById('homewin').style.display = "none";
-   document.getElementById('awaywin').style.display = "none";
-   document.getElementById('playagain').style.display = "none";
-   document.getElementById('graybox').style.display = "none";
 
-    for(i=0;i<9;i++)
-    {
-      document.getElementsByClassName("cell")[i].getElementsByTagName("p")[0].innerHTML = "&nbsp;";
-   }
+         document.getElementById("home_score").innerHTML = "0" + player_1[3];
+         document.getElementById("away_score").innerHTML = "0" + player_2[3];
+         document.getElementById("bestofbox").getElementsByTagName('div')[0].innerHTML = checkTurn();
+         document.getElementById("bestofbox").getElementsByTagName('div')[1].innerHTML = gamenum + "/" + bestof;
+         whole();
+}
+
+//resets the entire board in the event of a quit
+function reset() {
+
+      	start = false;
+      	sideLeft.style.display = 'none';
+      	sideRight.style.display = 'none';
+         sideLeft.style.opacity = '0';
+         sideRight.style.opacity = '0';
+         winBox.className = "";
+         player_2[3] = 0;
+         player_1[3] = 0;
+         gamenum = 1;
+      	close();
+         cleanBoard();
+         lightboard();
+         update();
+         document.getElementById("bestofbox").getElementsByTagName('div')[0].innerHTML = "";
+         document.getElementById("bestofbox").getElementsByTagName('div')[1].innerHTML = "";
+}
+
+//Cleans board to begin new game.
+function cleanBoard(){
+
+         counter = (first == false ? 1:2);
+         vboard = ["","","","","","","","",""];
+         board = [["","",""],["","",""],["","",""]];
+         win = false;
+         document.getElementById("home_score").parentNode.getElementsByTagName('h3')[0].style.color = "#aaa";
+         document.getElementById("away_score").parentNode.getElementsByTagName('h3')[0].style.color = "#aaa";
+         document.getElementById('homewin').style.display = "none";
+         document.getElementById('awaywin').style.display = "none";
+         document.getElementById('playagain').style.display = "none";
+         document.getElementById('graybox').style.display = "none";
+
+         for(i=0;i<9;i++)
+         {
+            document.getElementsByClassName("cell")[i].getElementsByTagName("p")[0].innerHTML = "&nbsp;";
+         }
    
 }
+//opens the center box and displays the welcome screen
 function open() {
 
-      
-      if(document.documentElement.clientWidth > 624){
-	      
-         center.className = "cell centeropen";
-         document.getElementById("midtop").className = "midcolopen";
-         document.getElementById("botmid").className = "midcolopen";
-         document.getElementById("centl").className = "midrowopen";
-         document.getElementById("centr").className = "midrowopen";
-         document.getElementsByClassName("main")[0].style.height="499px";
-         document.getElementsByClassName("main")[0].style.width="608px";
-
-   	 document.getElementById("pop").className = "open2";
-      }
-      else {
-          center.className = "cell centersmallopen";
-          document.getElementById("minstart").className = "open2";
-      }
-
-   	 x=0;
+         if(document.documentElement.clientWidth > 624){
+   	      
+            center.className = "cell centeropen";
+            document.getElementById("midtop").className = "midcolopen";
+            document.getElementById("botmid").className = "midcolopen";
+            document.getElementById("centl").className = "midrowopen";
+            document.getElementById("centr").className = "midrowopen";
+            document.getElementsByClassName("main")[0].style.height="499px";
+            document.getElementsByClassName("main")[0].style.width="608px";
+            document.getElementById("pop").className = "open2";
+         }
+         else {
+            center.className = "cell centersmallopen";
+            document.getElementById("minstart").className = "open2";
+         }
+         x=0;// lets the program know that the center box has been opened
 }
+//Closes the center box
 function close() {
 	 
-      if(document.documentElement.clientWidth > 624){
-      center.className = (start == true ? "cell centerplay":"cell centerclosed");
+      if(document.documentElement.clientWidth > 624){ // checks for the size of the screen
+            // center.className = (start == true ? "cell":"cell centerclosed");
+            if (start == true){ // if game has begun then the center cell should act as a regular cell
 
+               center.className = "cell";
+            }
+            else {
 
-   	 document.getElementById("midtop").className = "cell";
-       document.getElementById("botmid").className = "cell";
-       document.getElementById("centl").className = "cell";
-       document.getElementById("centr").className = "cell";
-   	 document.getElementsByClassName("main")[0].style.height="375px";
-   	 document.getElementsByClassName("main")[0].style.width="308px";
-
-   	 // document.getElementById("pop").style.opacity="0";
-   	 // document.getElementById("pop").style.display="none";
-     //   document.getElementById("pop").style.zIndex="-1";
-       document.getElementById("pop").className = "";
+               center.className = "cell centerclosed";
+            }
+         	document.getElementById("midtop").className = "cell";
+            document.getElementById("botmid").className = "cell";
+            document.getElementById("centl").className = "cell";
+            document.getElementById("centr").className = "cell";
+         	document.getElementsByClassName("main")[0].style.height="375px";
+         	document.getElementsByClassName("main")[0].style.width="308px";
+            document.getElementById("pop").className = "";
       }
       else {
          console.log("testtestest");
-          center.className = (start == true ? "cell centerplay":"cell centerclosed");
-          document.getElementById("minstart").className = "";
+         center.className = (start == true ? "cell centerplay":"cell centerclosed");
+         document.getElementById("minstart").className = "";
       }
-
-
-
-   	 x=1;
- 
+      x=1;
 }
+
+//Colors the board dark to highlight play moves and changes the color of score boards
 function darkboard() {
-   console.log("hi");
-   for(i=0;i<=8;i++)
+
+      for(i=0;i<=8;i++)
       {
             document.getElementsByClassName("cell")[i].className = "cell dark";
          
       }
-      // document.getElementsByTagName('body')[0].style.backgroundColor = "#aaa";
       document.getElementById("home_score").parentNode.getElementsByTagName('h3')[0].style.color = "white";
       document.getElementById("away_score").parentNode.getElementsByTagName('h3')[0].style.color = "white";
       document.getElementById("home_score").style.color = "white";
       document.getElementById("away_score").style.color = "white";
-
-
 }
+
+//Colors the board for the game to begin
 function lightboard() {
 
       for(i=0;i<=8;i++)
@@ -196,78 +214,84 @@ function lightboard() {
       document.getElementById("away_score").parentNode.getElementsByTagName('h3')[0].style.color = "#aaa";
       document.getElementById("home_score").style.color = "#aaa";
       document.getElementById("away_score").style.color = "#aaa";
-
 }
+
+// Checks to see if there is a win condition. if so it returns the function win() with the winners number inside.
+// This counts the number of wins of each player and returns true.
+
 function checkWin() {
 
-   for(i = 0; i < 3; i++ ){
-      var y = 0; z = 0; c = 0; p = 0; t = 0; q = 0;
-      for(f = 0; f < 3; f++){
-         if(board[i][f] == player_1[0]){
-            y += 1;
+      for(i = 0; i < 3; i++ ){
+         var y = 0; z = 0; c = 0; p = 0; t = 0; q = 0;
+         for(f = 0; f < 3; f++){
+            if(board[i][f] == player_1[0]){
+               y += 1;
+            }
+            if(board[i][f] == player_2[0]){
+               z += 1;
+            }
+            if(board[f][i] == player_1[0]){
+               c += 1;
+            }
+            if(board[f][i] == player_2[0]){
+               p += 1;
+            }
+            if(board[f][f] == player_2[0]){
+               t += 1;
+            }
+            if(board[f][f] == player_1[0]){
+               q += 1;
+            }
          }
-         if(board[i][f] == player_2[0]){
-            z += 1;
+         if(y == 3 || c == 3 || q == 3) {
+            return wins(1);
          }
-         if(board[f][i] == player_1[0]){
-            c += 1;
-         }
-         if(board[f][i] == player_2[0]){
-            p += 1;
-         }
-         if(board[f][f] == player_2[0]){
-            t += 1;
-         }
-         if(board[f][f] == player_1[0]){
-            q += 1;
+         if(z == 3 || p == 3 || t == 3) {
+            return wins(2);
          }
       }
-      if(y == 3 || c == 3 || q == 3) {
+
+      if(board[0][2] == "X" && board[1][1] == "X" && board[2][0] == "X" ) {
          return wins(1);
       }
-      if(z == 3 || p == 3 || t == 3) {
+      
+      else if(board[0][2] == "O" && board[1][1] == "O" && board[2][0] == "O" ) {
          return wins(2);
       }
-   }
-
-   if(board[0][2] == "X" && board[1][1] == "X" && board[2][0] == "X" ) {
-      return wins(1);
-   }
-   
-   else if(board[0][2] == "O" && board[1][1] == "O" && board[2][0] == "O" ) {
-      return wins(2);
-   }
-   
-   return false;
-
+      
+      return false;
 }
+
+// Adds a point to the player who won and checks for a gamewin and adjusts a variable. 
 function wins(winnum) {
-   if (winnum == 1) {
-      player_1[3] += 1;
-      winner = player_1[1];
-      console.log("X wins: " + player_1[3] );
-      // winFlash("home_score");
-      document.getElementById('homewin').style.display = "block";
-      if(player_1[3] == bestof - Math.floor(bestof/2))
-      {
-         gamewin = true;
-      }
+      if (winnum == 1) {
 
-   }
-   else {
-      player_2[3] += 1;
-      winner = player_2[1];
-      console.log("O wins: " + player_2[3] );
-      // winFlash("away_score");
-      document.getElementById('awaywin').style.display = "block";
-       if(player_2[3] == bestof - Math.floor(bestof/2))
-      {
-         gamewin = true;
+         player_1[3] += 1;
+         winner = player_1[1];
+         console.log("X wins: " + player_1[3] );
+         // winFlash("home_score");
+         document.getElementById('homewin').style.display = "block";
+         if(player_1[3] == bestof - Math.floor(bestof/2))
+         {
+            gamewin = true;
+         }
       }
-   }
-   first = !first;
-   return true;
+      else {
+
+         player_2[3] += 1;
+         winner = player_2[1];
+         console.log("O wins: " + player_2[3] );
+         // winFlash("away_score");
+         document.getElementById('awaywin').style.display = "block";
+          if(player_2[3] == bestof - Math.floor(bestof/2))
+         {
+            gamewin = true;
+         }
+      }
+      first = !first;
+      return true;
 }
+
 function gamewinner() {
       gamewin = false;
       cleanBoard();
@@ -309,19 +333,19 @@ function whole()
            whole();
       	}   	 
       }
-      document.getElementById("startb").onclick = function() {
-      	close();
-      	startGame();
+      document.getElementById("pop").onclick = function() {
+         close();
          whole();
       }
-      document.getElementById("pop").onclick = function() {
+      document.getElementById("startb").onclick = function() {
       	close();
+         startGame();
          whole();
       }
       document.getElementById("headr").onclick = function() {
          if(start == true){
       	reset();
-         center.className = "cell centeropen";
+         center.className = "centerclosed";
          console.log("start: " + start + " x: " + x )
          document.getElementById("headr").className = "";
          whole();
@@ -385,6 +409,7 @@ function whole()
                      else {
                         gamewin = true;
                         document.getElementById("winnerbox").getElementsByTagName("h2")[0].innerHTML = "It's a tie!";
+                        document.getElementById("minWin").innerHTML = "Tie";
                         gamewinner();
                         tie = true;
                         winButtonClick();

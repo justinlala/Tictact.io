@@ -85,9 +85,7 @@ body {
 	background-color: #ddd;
 	color: #aaa;
 }
-.centerclosed:hover {
-	background-color: orange;
-}
+
 .centeropenwin{
 	z-index: 2;
 	background-color: orange;
@@ -138,6 +136,10 @@ body {
 .cell:hover, .midrowopen:hover, .midcolopen:hover {
 	background-color: #ddd;
 }
+.centerclosed:hover {
+	background-color: orange;
+	cursor: pointer;
+}
 
 .centeropen:hover {
 	background-color: orange;
@@ -174,16 +176,16 @@ body {
 #minWin {
 	position: relative;
 	transition: 0.5s;
-	width: 101px;
-	height: 101px;
+	width: 100px;
+	height: 99px;
 	font-size: 30px;
 	font-family: 'Exo', sans-serif;
 	opacity: 0;
 	text-align: center;
 	display: none;
 	margin: 0 auto;
-	margin-top: -348px;
-	padding-top: 21px;
+	margin-top: -270px;
+	padding-top: 23px;
 	color: black;
 }
 #minWin.open2 {
@@ -194,6 +196,7 @@ body {
 }
 #minWin.open2:hover {
 	background-color: orange;
+	color: white;
 }
 
 #quit {
@@ -355,7 +358,7 @@ h3.win {
 	background-color: #ccc;
 	display: none;
 	text-align: center;
-	padding-top: 23px;
+	padding-top: 0px;
 	font-size: 50px;
 	font-family: 'Exo', sans-serif;
 	color: white;
@@ -371,7 +374,7 @@ h3.win {
 	height: 100%;
 	display: none;
 	text-align: center;
-	padding-top: 23px;
+	padding-top: 0px;
 	font-size: 50px;
 	font-family: 'Exo', sans-serif;
 	color: white;
@@ -380,39 +383,34 @@ h3.win {
 #playagaintext {
 	padding-left: 18px;
 }
-#homewin {
+#homewin, #awaywin {
 
 	z-index: 1;
 	position: absolute;
 	top: 66px;
-	left: 0;
 	width: 50%;
-	height: 1000px;
+	height: 100%;
 	opacity: .5;
 	background-color: orange;
 	display: none;
-	border-right: 1px dashed red;
+	
 	transition: 2s;
 	overflow: hidden;
+}
+#awaywin {
+
+	border-left: 1px dashed red;
+	right: 0;
+}
+#homewin {
+
+	border-right: 1px dashed red;
+	left: 0;
 }
 .clear {
 	clear: both;
 }
-#awaywin {
 
-	z-index: 1;
-	position: absolute;
-	top: 66px;
-	right: 0;
-	width: 50%;
-	height: 1000px;
-	opacity: .5;
-	background-color: orange;
-	display: none;
-	border-left: 1px dashed red;
-	transition: 2s;
-	overflow: hidden;
-}
 #bestofbox {
 	width: 308px;
 	margin: 0 auto;
