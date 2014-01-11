@@ -1,4 +1,4 @@
-var player_1 = ["X", "Home", true, 0];// Player
+var player_1 = ["X", "Home", true, 0];// Player1 (player key, player name, )
 var player_2 = ["O", "Away", false, 0];
 var x = 1;
 var start = false;
@@ -251,11 +251,11 @@ function checkWin() {
          }
       }
 
-      if(board[0][2] == "X" && board[1][1] == "X" && board[2][0] == "X" ) {
+      if(board[0][2] == player_1[0] && board[1][1] == player_1[0] && board[2][0] == player_1[0] ) {
          return wins(1);
       }
       
-      else if(board[0][2] == "O" && board[1][1] == "O" && board[2][0] == "O" ) {
+      else if(board[0][2] == player_1[1] && board[1][1] == player_1[1] && board[2][0] == player_1[1] ) {
          return wins(2);
       }
       
@@ -367,6 +367,8 @@ function whole()
          document.getElementById("minWin").className = "";
          player_2[3] = 0;
          player_1[3] = 0;
+         gamenum = 1;
+         first = false;
          update();
          lightboard();
          whole();
