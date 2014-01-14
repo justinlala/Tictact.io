@@ -29,7 +29,9 @@ function ScoreBoard(player1,player2) {
          this.awayScore = document.getElementById("away_score").parentNode.getElementsByTagName('h3')[0];
          this.homeWin = document.getElementById('homewin');
          this.awayWin = document.getElementById('awaywin');
-         this.home = player1.wins
+         this.playAgain = document.getElementById('playagain');
+         this.grayBox = document.getElementById('graybox');
+         this.home = player1.wins;
          this.away = player2.wins;
          this.winning;
 
@@ -61,6 +63,17 @@ function ScoreBoard(player1,player2) {
                this.winning = "Tie";
             }
          }
+
+         this.newScoreBoard = function() {
+            this.clearScore();
+            this.homeWin.style.display = "none";
+            this.awayWin.style.display = "none";
+            this.playAgain.style.display = "none";
+            this.grayBox.style.display = "none";
+
+         }
+
+
 
 
 
@@ -197,7 +210,6 @@ function Board() {
             document.getElementById("pop").className = "";
       }
       else {
-         console.log("testtestest");
          center.className = (wholeGame.start == true ? "cell centerplay":"cell centerclosed");
          document.getElementById("minstart").className = "";
       }
@@ -235,6 +247,7 @@ var ticBoard = new Board();
 // This function starts the game. meaning it goes into game mode and out of intro mode. 
 function startGame() {
 
+         console.log("start");
          wholeGame.current().newRound();
          wholeGame.start = true;
       	ticBoard.sideLeft.style.display = 'block';
@@ -310,12 +323,15 @@ function convert_table() {
          for(var i in vboard){
             wholeGame.current().getCurrentRound().board[Math.floor(i/3)][i%3] = vboard[i];
          }
-         dis_board();
+         // dis_board();
 
 }
 
 //Updates all important values to the screen. Scores and game # and turn
 function update() {
+
+                  console.log("update");
+
 
          document.getElementById("home_score").innerHTML = "0" + wholeGame.current().playerone.wins;
          document.getElementById("away_score").innerHTML = "0" + wholeGame.current().playertwo.wins;
@@ -346,7 +362,7 @@ function reset() {
 function quit() {
 
          init();
-         ticBoard.clean();
+         cleanBoard();
          ticBoard.closeIt();
          ticBoard.sideLeft.style.display = 'none';
          ticBoard.sideRight.style.display = 'none';
@@ -355,6 +371,8 @@ function quit() {
          winBox.className = "";
          ticBoard.center.className = "centerclosed";
          ticBoard.light();
+
+         document.getElementById("headr").className = "";
 
          document.getElementById("bestofbox").getElementsByTagName('div')[0].innerHTML = "";
          document.getElementById("bestofbox").getElementsByTagName('div')[1].innerHTML = "";
@@ -397,11 +415,7 @@ function darkboard() {
 //Colors the board for the game to begin
 function lightboard() {
 
-      for(i in ticBoard.boardcells)
-      {
-            ticBoard.boardcells[i].className = "cell";
-         
-      }
+      ticBoard.light();
       document.getElementById("home_score").parentNode.getElementsByTagName('h3')[0].style.color = "#aaa";
       document.getElementById("away_score").parentNode.getElementsByTagName('h3')[0].style.color = "#aaa";
       document.getElementById("home_score").style.color = "#aaa";
@@ -516,7 +530,7 @@ function whole()
       if(wholeGame.start == false) {
 
         	ticBoard.center.onclick = function() {
-            console.log("in the else"); 
+         
          	if(ticBoard.open==false && wholeGame.start == false){
          	  ticBoard.openUp();
               whole();
@@ -525,66 +539,55 @@ function whole()
          	  ticBoard.closeIt();
               whole();
          	}   	 
-         }
+         };
          document.getElementById("pop").onclick = function() {
             ticBoard.closeIt();
             whole();
-         }
+         };
          document.getElementById("startb").onclick = function() {
          	ticBoard.closeIt();
             wholeGame.newGame();
             startGame();
             whole();
-         }
+         };
          document.getElementById("headr").onclick = function() {
             if(wholeGame.start == true){
-
-
                quit();
-
-          //   console.log("you clicked quit");
-         	// reset();
-          //   center.className = "centerclosed";
-          //   document.getElementById("headr").className = "";
-
-            whole();
+               whole();
          }
          else {
             whole();
          }
-         }
+         };
          document.getElementById("minstart").onclick = function() {
-            startGame();
             ticBoard.closeIt();
-            lightboard();
+            wholeGame.newGame();
+            startGame();
             whole();
             
          }
-         document.getElementById("minWin").onclick = function() {
+        
 
-            startGame();
-            document.getElementById("minWin").className = "";
-            playertwo.wins = 0;
-            playerone.wins = 0;
-            wholeGame.current().gamenum = 0;
-            wholeGame.current().first = !wholeGame.current().first;
-            update();
-            lightboard();
-            whole();
-
-            
+         for(i in ticBoard.boardcells)
+         {  
+               if (i != 4){
+                  ticBoard.boardcells[i].onclick = function() 
+                  {
+                    console.log("hello");
+                  };
+               }
          }
       }
 
       else 
       {  
          document.getElementById("headr").className = "shine";
-         console.log("in the else");
+         
          for(i in ticBoard.boardcells)
          {  
                ticBoard.boardcells[i].onclick = function() 
                {
-                     console.log("in the for");
+                     
                      if(wholeGame.current().getCurrentRound().counter <=9 && win == false && wholeGame.start == true) 
                      {
 
@@ -610,6 +613,7 @@ function whole()
                         document.getElementById('graybox').style.display = "block";
                         darkboard();
                         update();
+                        winButtonClick();
                         }
                         else {
                            gamewin = true;
@@ -630,10 +634,16 @@ function whole()
             if(!wholeGame.current().tie){ 
                gamewinner();
             }
-            winButtonClick();
+            
          }
          if(win == true || wholeGame.current().getCurrentRound().counter == 9)
          {
+            
+            document.getElementById("minWin").onclick = function() {
+               document.getElementById("minWin").className = "";
+               winButtonClick();
+
+            }
             document.getElementById("playagain").onclick = function() {
                gamePlayagain();
                
