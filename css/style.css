@@ -224,7 +224,7 @@ body {
 }
 #pop.open2, #winnerbox.open2 {
 
-	z-index: 7;
+	z-index: 1;
 	opacity: 1;
 	display: block;
 	font-weight: 100;

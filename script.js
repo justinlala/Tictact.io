@@ -2,26 +2,109 @@
 var win = false;
 var vboard = ["","","","","","","","",""];
 var bestof = 3;
-var gamenum = 1;
 var gamewin = false;
 var winBox = document.getElementById("winnerbox");
 var boardcells = document.getElementsByClassName("cell");
+var gameSet; 
+
+
+
+function ScoreBoard(player1,player2) {
+
+         this.homeScore = document.getElementById("home_score").parentNode.getElementsByTagName('h3')[0];
+         this.awayScore = document.getElementById("away_score").parentNode.getElementsByTagName('h3')[0];
+         this.homeWin = document.getElementById('homewin');
+         this.awayWin = document.getElementById('awaywin');
+         this.home = player1.wins
+         this.away = player2.wins;
+
+         this.homeScore.style.color = "#aaa";
+         this.awayScore.style.color = "#aaa";
+         this.homeWin.style.display = "none";
+         this.awayWin.style.display = "none";
+
+         this.clearScore = function() {
+         
+            this.homeScore.style.color = "#aaa";
+            this.awayScore.style.color = "#aaa";
+            this.home = 0;
+            this.away = 0;
+
+         }
+
+         this.update = function() {
+            this.home = player1.wins
+            this.away = player2.wins;
+         }
+
+}
 
 function Player(chip,name) {
    this.chip = chip;
    this.name = name;
    this.wins = 0;
-   this.games = [];
+   this.rounds = [];
+
+   this.newRound = function(player) {
+      var round = new Rounds(this,player)
+      this.rounds.push(round);
+   }
+}
+
+function Rounds(player1,player2) {
+
+   this.first = false;
+   this.counter = 0;
+   this.board = [[,,],[,,],[,,]];
+   this.winner = "";
+   this.cats = false;
+   this.roundScore = new ScoreBoard(player1,player2);
+
+
 }
 
 function Game() {
+
+   this.start = false;
    this.allRounds = [];
+   this.tie = false;
+   this.playerone = new Player("X","Home");
+   this.playertwo = new Player("O","Away");
+   this.gamenum = 0;
+
+   this.newRound = function() {
+      console.log("round created");
+      var round = new Rounds(this.playerone,this.playertwo);
+      this.allRounds.push(round);
+      // this.playerone.newRound(this.playertwo);
+      // this.playertwo.newRound(this.playerone);
+      // this.allRounds.push(this.playerone.rounds[0]);
+      this.gamenum++;
+   };
+   this.getCurrentRound = function() {
+      if(this.gamenum != -1){
+      return this.allRounds[this.allRounds.length-1];
+      }
+      else
+      {
+         return false;
+      }
+
+   }
 }
 
-var gameSet = new Game();
 
-var playerone = new Player("X","Home");
-var playertwo = new Player("O","Away");
+
+function init() {
+   
+  gameSet = new Game();
+}
+
+
+
+
+
+
 
 function Board() {
 
@@ -35,35 +118,96 @@ function Board() {
    this.main = document.getElementsByClassName("main")[0];
    this.boardcells = document.getElementsByClassName("cell");
    this.open = false;
+
+   this.clean = function() {
+
+      for(i=0;i<this.boardcells.length;i++)
+         {
+            document.getElementsByClassName("cell")[i].getElementsByTagName("p")[0].innerHTML = "&nbsp;";
+         }
+
+   };
+
+   this.openUp = function() {
+
+         if(document.documentElement.clientWidth > 624){
+            
+            center.className = "cell centeropen";
+            this.midtop.className = "midcolopen";
+            this.botmid.className = "midcolopen";
+            this.centl.className = "midrowopen";
+            this.centr.className = "midrowopen";
+            this.main.style.height="499px";
+            this.main.style.width="608px";
+            document.getElementById("pop").className = "open2";
+         }
+         else {
+            center.className = "cell centersmallopen";
+            document.getElementById("minstart").className = "open2";
+         }
+         this.open = true;
+   };
+   this.closeIt = function() {
+
+      if(document.documentElement.clientWidth > 624){ // checks for the size of the screen
+            // center.className = (start == true ? "cell":"cell centerclosed");
+            if (gameSet.start == true){ // if game has begun then the center cell should act as a regular cell
+
+               center.className = "cell";
+            }
+            else {
+
+               center.className = "cell centerclosed";
+            }
+            ticBoard.midtop.className = "cell";
+            ticBoard.botmid.className = "cell";
+            ticBoard.centl.className = "cell";
+            ticBoard.centr.className = "cell";
+            ticBoard.main.style.height="375px";
+            ticBoard.main.style.width="308px";
+            document.getElementById("pop").className = "";
+      }
+      else {
+         console.log("testtestest");
+         center.className = (gameSet.start == true ? "cell centerplay":"cell centerclosed");
+         document.getElementById("minstart").className = "";
+      }
+      ticBoard.open = false;
+   };
+   this.dark = function() {
+
+      for(i in this.boardcells)
+      {
+            this.boardcells[i].className = "cell dark";
+         
+      }
+   };
+
+   this.light = function() {
+
+      for(i in this.boardcells)
+      {
+            this.boardcells[i].className = "cell";
+         
+      }
+   }
    
 
 }
 
 var ticBoard = new Board();
 
-function Rounds() {
 
-   this.start = false;
-   this.first = false;
-   this.counter = 0;
-   this.board = [[,,],[,,],[,,]];
-   this.winner = "";
-   this.tie = false;
-   this.players = [];
 
-}
+// playerone.games.push(round);
+// playertwo.games.push(round);
 
-var round = new Rounds();
-gameSet.allRounds.push(round);
-playerone.games.push(round);
-playertwo.games.push(round);
-round.players.push(playerone);
-round.players.push(playertwo);
 
 // This function starts the game. meaning it goes into game mode and out of intro mode. 
 function startGame() {
 
-         round.start = true;
+         gameSet.newRound();
+         gameSet.start = true;
       	ticBoard.sideLeft.style.display = 'block';
       	ticBoard.sideRight.style.display = 'block';
          ticBoard.sideLeft.style.opacity = '1';
@@ -75,29 +219,29 @@ function startGame() {
 //this function runs when user chooses to play again. it advances the game num.
 function gamePlayagain() {
 
+         gameSet.newRound();
          cleanBoard();
          lightboard();
-         gamenum++;
          update();
 }
 
 // Returns "X" or "0"
 function checkTurn() {
 
-      if (round.first) {
-         if(round.counter % 2 == 0) {
-            return playertwo.chip;
+      if (gameSet.getCurrentRound().first) {
+         if(gameSet.getCurrentRound().counter % 2 == 0) {
+            return gameSet.playertwo.chip;
          }
          else {
-            return playerone.chip;
+            return gameSet.playerone.chip;
          }
       }
       else {
-         if(round.counter % 2 == 0) {
-            return playerone.chip;
+         if(gameSet.getCurrentRound().counter % 2 == 0) {
+            return gameSet.playerone.chip;
          }
          else {
-            return playertwo.chip;
+            return gameSet.playertwo.chip;
          }
       }
 }
@@ -126,16 +270,16 @@ function winFlash(winclass) {
 
 // Displays board to console
 function dis_board() {
-         console.log(" 00:" + round.board[0][0] + " 01:" + round.board[0][1] + " 02:" + round.board[0][2]);
-         console.log(" 10:" + round.board[1][0] + " 11:" + round.board[1][1] + " 12:" + round.board[1][2]);
-         console.log(" 20:" + round.board[2][0] + " 21:" + round.board[2][1] + " 22:" + round.board[2][2]);
+         console.log(" 00:" + gameSet.getCurrentRound().board[0][0] + " 01:" + gameSet.getCurrentRound().board[0][1] + " 02:" + gameSet.getCurrentRound().board[0][2]);
+         console.log(" 10:" + gameSet.getCurrentRound().board[1][0] + " 11:" + gameSet.getCurrentRound().board[1][1] + " 12:" + gameSet.getCurrentRound().board[1][2]);
+         console.log(" 20:" + gameSet.getCurrentRound().board[2][0] + " 21:" + gameSet.getCurrentRound().board[2][1] + " 22:" + gameSet.getCurrentRound().board[2][2]);
 }
 
 //Converts array of play values into a 2d array that i use to test win conditions
 function convert_table() {
 
          for(var i in vboard){
-            round.board[Math.floor(i/3)][i%3] = vboard[i];
+            gameSet.getCurrentRound().board[Math.floor(i/3)][i%3] = vboard[i];
          }
          dis_board();
 
@@ -144,26 +288,24 @@ function convert_table() {
 //Updates all important values to the screen. Scores and game # and turn
 function update() {
 
-         document.getElementById("home_score").innerHTML = "0" + playerone.wins;
-         document.getElementById("away_score").innerHTML = "0" + playertwo.wins;
+         document.getElementById("home_score").innerHTML = "0" + gameSet.playerone.wins;
+         document.getElementById("away_score").innerHTML = "0" + gameSet.playertwo.wins;
          document.getElementById("bestofbox").getElementsByTagName('div')[0].innerHTML = checkTurn();
-         document.getElementById("bestofbox").getElementsByTagName('div')[1].innerHTML = gamenum + "/" + bestof;
+         document.getElementById("bestofbox").getElementsByTagName('div')[1].innerHTML = gameSet.gamenum + "/" + bestof;
+         gameSet.getCurrentRound().roundScore.update();
          whole();
 }
 
 //resets the entire board in the event of a quit
 function reset() {
 
-      	round.start = false;
+      	var gameSet = new Game();
       	ticBoard.sideLeft.style.display = 'none';
       	ticBoard.sideRight.style.display = 'none';
          ticBoard.sideLeft.style.opacity = '0';
          ticBoard.sideRight.style.opacity = '0';
          winBox.className = "";
-         playertwo.wins = 0;
-         playerone.wins = 0;
-         gamenum = 1;
-      	close();
+      	ticBoard.closeIt();
          cleanBoard();
          lightboard();
          update();
@@ -174,9 +316,7 @@ function reset() {
 //Cleans board to begin new game.
 function cleanBoard(){
 
-         round.counter = 0;
          vboard = ["","","","","","","","",""];
-         round.board = [["","",""],["","",""],["","",""]];
          win = false;
          document.getElementById("home_score").parentNode.getElementsByTagName('h3')[0].style.color = "#aaa";
          document.getElementById("away_score").parentNode.getElementsByTagName('h3')[0].style.color = "#aaa";
@@ -185,70 +325,20 @@ function cleanBoard(){
          document.getElementById('playagain').style.display = "none";
          document.getElementById('graybox').style.display = "none";
 
-         for(i=0;i<ticBoard.boardcells.length;i++)
-         {
-            document.getElementsByClassName("cell")[i].getElementsByTagName("p")[0].innerHTML = "&nbsp;";
-         }
+         ticBoard.clean();
+
+         // for(i=0;i<ticBoard.boardcells.length;i++)
+         // {
+         //    document.getElementsByClassName("cell")[i].getElementsByTagName("p")[0].innerHTML = "&nbsp;";
+         // }
    
-}
-//opens the center box and displays the welcome screen
-function open() {
-
-         if(document.documentElement.clientWidth > 624){
-   	      
-            center.className = "cell centeropen";
-            ticBoard.midtop.className = "midcolopen";
-            ticBoard.botmid.className = "midcolopen";
-            ticBoard.centl.className = "midrowopen";
-            ticBoard.centr.className = "midrowopen";
-            ticBoard.main.style.height="499px";
-            ticBoard.main.style.width="608px";
-            document.getElementById("pop").className = "open2";
-         }
-         else {
-            center.className = "cell centersmallopen";
-            document.getElementById("minstart").className = "open2";
-         }
-         ticBoard.open = true;// lets the program know that the center box has been opened
-}
-//Closes the center box
-function close() {
-	 
-      if(document.documentElement.clientWidth > 624){ // checks for the size of the screen
-            // center.className = (start == true ? "cell":"cell centerclosed");
-            if (round.start == true){ // if game has begun then the center cell should act as a regular cell
-
-               center.className = "cell";
-            }
-            else {
-
-               center.className = "cell centerclosed";
-            }
-         	ticBoard.midtop.className = "cell";
-            ticBoard.botmid.className = "cell";
-            ticBoard.centl.className = "cell";
-            ticBoard.centr.className = "cell";
-         	ticBoard.main.style.height="375px";
-         	ticBoard.main.style.width="308px";
-            document.getElementById("pop").className = "";
-      }
-      else {
-         console.log("testtestest");
-         center.className = (round.start == true ? "cell centerplay":"cell centerclosed");
-         document.getElementById("minstart").className = "";
-      }
-      ticBoard.open = false;
 }
 
 //Colors the board dark to highlight play moves and changes the color of score boards
 function darkboard() {
 
       console.log("helo in the dark")
-      for(i in ticBoard.boardcells)
-      {
-            ticBoard.boardcells[i].className = "cell dark";
-         
-      }
+      ticBoard.dark();
       document.getElementById("home_score").parentNode.getElementsByTagName('h3')[0].style.color = "white";
       document.getElementById("away_score").parentNode.getElementsByTagName('h3')[0].style.color = "white";
       document.getElementById("home_score").style.color = "white";
@@ -277,22 +367,22 @@ function checkWin() {
       for(i = 0; i < 3; i++ ){
          var y = 0; z = 0; c = 0; p = 0; t = 0; q = 0;
          for(f = 0; f < 3; f++){
-            if(round.board[i][f] == playerone.chip){
+            if(gameSet.getCurrentRound().board[i][f] == gameSet.playerone.chip){
                y += 1;
             }
-            if(round.board[i][f] == playertwo.chip){
+            if(gameSet.getCurrentRound().board[i][f] == gameSet.playertwo.chip){
                z += 1;
             }
-            if(round.board[f][i] == playerone.chip){
+            if(gameSet.getCurrentRound().board[f][i] == gameSet.playerone.chip){
                c += 1;
             }
-            if(round.board[f][i] == playertwo.chip){
+            if(gameSet.getCurrentRound().board[f][i] == gameSet.playertwo.chip){
                p += 1;
             }
-            if(round.board[f][f] == playertwo.chip){
+            if(gameSet.getCurrentRound().board[f][f] == gameSet.playertwo.chip){
                t += 1;
             }
-            if(round.board[f][f] == playerone.chip){
+            if(gameSet.getCurrentRound().board[f][f] == gameSet.playerone.chip){
                q += 1;
             }
          }
@@ -304,11 +394,11 @@ function checkWin() {
          }
       }
 
-      if(round.board[0][2] == playerone.chip && round.board[1][1] == playerone.chip && round.board[2][0] == playerone.chip ) {
+      if(gameSet.getCurrentRound().board[0][2] == gameSet.playerone.chip && gameSet.getCurrentRound().board[1][1] == gameSet.playerone.chip && gameSet.getCurrentRound().board[2][0] == gameSet.playerone.chip ) {
          return wins(1);
       }
       
-      else if(round.board[0][2] == playertwo.chip && round.board[1][1] == playertwo.chip && round.board[2][0] == playertwo.chip ) {
+      else if(gameSet.getCurrentRound().board[0][2] == gameSet.playertwo.chip && gameSet.getCurrentRound().board[1][1] == gameSet.playertwo.chip && gameSet.getCurrentRound().board[2][0] == gameSet.playertwo.chip ) {
          return wins(2);
       }
       
@@ -319,29 +409,29 @@ function checkWin() {
 function wins(winnum) {
       if (winnum == 1) {
 
-         playerone.wins += 1;
-         round.winner = playerone.name;
-         console.log("X wins: " + playerone.wins );
+         gameSet.playerone.wins += 1;
+         gameSet.getCurrentRound().winner = gameSet.playerone.name;
+         console.log("X wins: " + gameSet.playerone.wins );
          // winFlash("home_score");
          document.getElementById('homewin').style.display = "block";
-         if(playerone.wins == bestof - Math.floor(bestof/2))
+         if(gameSet.playerone.wins == bestof - Math.floor(bestof/2))
          {
             gamewin = true;
          }
       }
       else {
 
-         playertwo.wins += 1;
-         round.winner = playertwo.name;
-         console.log("O wins: " + playertwo.wins );
+         gameSet.playertwo.wins += 1;
+         gameSet.getCurrentRound().winner = gameSet.playertwo.name;
+         console.log("O wins: " + gameSet.playertwo.wins );
          // winFlash("away_score");
          document.getElementById('awaywin').style.display = "block";
-          if(playertwo.wins == bestof - Math.floor(bestof/2))
+          if(gameSet.playertwo.wins == bestof - Math.floor(bestof/2))
          {
             gamewin = true;
          }
       }
-      round.first = !round.first;
+      gameSet.getCurrentRound().first = !gameSet.getCurrentRound().first;
       return true;
 }
 
@@ -366,41 +456,41 @@ function gamewinner() {
          document.getElementById("minWin").className = "open2";
 
       }
-      round.first = !round.first;
+      gameSet.getCurrentRound().first = !gameSet.getCurrentRound().first;
       ticBoard.open = true;
 
 }
 
 function whole() 
 {
-      console.log("in the else"); 
-      if(round.start == false) {
+      
+      if(gameSet.start == false) {
 
         	ticBoard.center.onclick = function() {
-
-         	if(ticBoard.open==false && round.start == false){
-         	  open();
+            console.log("in the else"); 
+         	if(ticBoard.open==false && gameSet.start == false){
+         	  ticBoard.openUp();
               whole();
          	}
-         	else if (ticBoard.open==true && round.start == false) {
-         	  close();
+         	else if (ticBoard.open==true && gameSet.start == false) {
+         	  ticBoard.closeIt();
               whole();
          	}   	 
          }
          document.getElementById("pop").onclick = function() {
-            close();
+            ticBoard.closeIt();
             whole();
          }
          document.getElementById("startb").onclick = function() {
-         	close();
+         	ticBoard.closeIt();
             startGame();
             whole();
          }
          document.getElementById("headr").onclick = function() {
-            if(round.start == true){
+            if(gameSet.start == true){
          	reset();
             center.className = "centerclosed";
-            console.log("start: " + round.start + " x: " + x )
+            // console.log("start: " + gameSet.getCurrentRound().start + " x: " + x )
             document.getElementById("headr").className = "";
             whole();
          }
@@ -410,7 +500,7 @@ function whole()
          }
          document.getElementById("minstart").onclick = function() {
             startGame();
-            close();
+            ticBoard.closeIt();
             lightboard();
             whole();
             
@@ -421,8 +511,8 @@ function whole()
             document.getElementById("minWin").className = "";
             playertwo.wins = 0;
             playerone.wins = 0;
-            gamenum = 1;
-            round.first = !round.first;
+            gameSet.gamenum = 0;
+            gameSet.getCurrentRound().first = !gameSet.getCurrentRound().first;
             update();
             lightboard();
             whole();
@@ -440,7 +530,7 @@ function whole()
                ticBoard.boardcells[i].onclick = function() 
                {
                      console.log("in the for");
-                     if(round.counter <=9 && win == false && round.start == true) 
+                     if(gameSet.getCurrentRound().counter <=9 && win == false && gameSet.start == true) 
                      {
 
                         if(this.getElementsByTagName("p")[0].innerHTML == "&nbsp;") 
@@ -450,13 +540,17 @@ function whole()
                            vboard[now-1] = checkTurn();
                            convert_table();
                            win = checkWin();
-                           round.counter+=1;
+                           gameSet.getCurrentRound().counter+=1;
                            update();
                         }
                      }
-                     if(win == true || round.counter == 9)
+                     if(gameSet.getCurrentRound().counter == 9 && win == false )
                      {
-                        if(gamenum != bestof){
+                        gameSet.getCurrentRound().cats = true;
+                     }
+                     if(win == true || gameSet.getCurrentRound().counter == 9)
+                     {
+                        if(gameSet.gamenum != bestof){
                         document.getElementById('playagain').style.display = "block";
                         document.getElementById('graybox').style.display = "block";
                         darkboard();
@@ -467,7 +561,7 @@ function whole()
                            document.getElementById("winnerbox").getElementsByTagName("h2")[0].innerHTML = "It's a tie!";
                            document.getElementById("minWin").innerHTML = "Tie<br />Game";
                            gamewinner();
-                           round.tie = true;
+                           gameSet.tie = true;
                            winButtonClick();
                         }
 
@@ -478,12 +572,12 @@ function whole()
 
          if(gamewin == true)
          {
-            if(!round.tie){ 
+            if(!gameSet.tie){ 
                gamewinner();
             }
             winButtonClick();
          }
-         if(win == true || round.counter == 9)
+         if(win == true || gameSet.getCurrentRound().counter == 9)
          {
             document.getElementById("playagain").onclick = function() {
                gamePlayagain();

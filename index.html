@@ -6,7 +6,7 @@
 	<link href='http://fonts.googleapis.com/css?family=Exo:100' rel='stylesheet' type='text/css'>
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 </head>
-<body onload="whole()">
+<body onload="init(), whole()">
 	<header id ="headr"><div class="title">Tictact<span style="color: orange">.io</span></div>
 		<div class="clear"></div><div id="quit">Quit?</div></header>
 	<div id = "content">
@@ -33,24 +33,25 @@
 				<div class = "cell" ><p id ="9" class ="celltext">&nbsp;</p></div>
 			</div>
 		</div>
-		
-		<div id="bestofbox"><div style="text-align: left"></div><div style="text-align: right; margin-top: -20px"></div></div>
-		<div id="sider"> 
-				<h3>Away</h3>
-				<h4 id="away_score"></h4>
+
+	<!-- Hidden items -->
+	<div id="bestofbox"><div style="text-align: left"></div><div style="text-align: right; margin-top: -20px"></div></div>
+	<div id="sider"> 
+			<h3>Away</h3>
+			<h4 id="away_score"></h4>
+	</div>
+
+	<div id="pop">
+			<h2 id"tit">Welcome!</h2>
+			<div id="startb"><span id="starttext">Start Game</span>
+	</div>
+	</div>
+		<div id="winnerbox">
+				<h2 id"tit">Game Over</h2>
+				<div id="winb"><span id="starttext">Play Again</span>
+				</div>
 		</div>
-	
-		<div id="pop">
-				<h2 id"tit">Welcome!</h2>
-				<div id="startb"><span id="starttext">Start Game</span>
-		</div>
-		</div>
-			<div id="winnerbox">
-					<h2 id"tit">Game Over</h2>
-					<div id="winb"><span id="starttext">Play Again</span>
-					</div>
-			</div>
-		</div>
+	</div>
 
 	<div id="playagain"><div id="playagaintext">Play Again ?</div></div>
 	<div id="graybox"><div id="playagaintext"></div></div>	
@@ -58,6 +59,8 @@
 	<div id="awaywin"></div>
 	<div id="minstart">Start</div>
 	<div id="minWin">Game<br />Over</div>
+	<!-- Hidden items -->
+
 <script type="text/javascript" src="script.js"></script>
 </body>
 </html>
