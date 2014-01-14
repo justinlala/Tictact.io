@@ -343,6 +343,25 @@ function reset() {
          document.getElementById("bestofbox").getElementsByTagName('div')[1].innerHTML = "";
 }
 
+function quit() {
+
+         init();
+         ticBoard.clean();
+         ticBoard.closeIt();
+         ticBoard.sideLeft.style.display = 'none';
+         ticBoard.sideRight.style.display = 'none';
+         ticBoard.sideLeft.style.opacity = '0';
+         ticBoard.sideRight.style.opacity = '0';
+         winBox.className = "";
+         ticBoard.center.className = "centerclosed";
+         ticBoard.light();
+
+         document.getElementById("bestofbox").getElementsByTagName('div')[0].innerHTML = "";
+         document.getElementById("bestofbox").getElementsByTagName('div')[1].innerHTML = "";
+
+
+}
+
 //Cleans board to begin new game.
 function cleanBoard(){
 
@@ -519,10 +538,15 @@ function whole()
          }
          document.getElementById("headr").onclick = function() {
             if(wholeGame.start == true){
-         	reset();
-            center.className = "centerclosed";
-            // console.log("start: " + gameSet.getCurrentRound().start + " x: " + x )
-            document.getElementById("headr").className = "";
+
+
+               quit();
+
+          //   console.log("you clicked quit");
+         	// reset();
+          //   center.className = "centerclosed";
+          //   document.getElementById("headr").className = "";
+
             whole();
          }
          else {
